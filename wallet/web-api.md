@@ -41,7 +41,7 @@ Then clone and run [NBXplorer](https://github.com/dgarage/NBXplorer) with defaul
 Reference the `NBXplorer.Client` nuget package then you need to notify the `NBXplorer` to track the user wallet:
 
 ```cs
-var network = new NBXplorerNetworkProvider(ChainType.Main).GetBTC();
+var network = new NBXplorerNetworkProvider(NetworkType.Mainnet).GetBTC();
 var userExtKey = new ExtKey();
 var userDerivationScheme = network.DerivationStrategyFactory.CreateDirectDerivationStrategy(userExtKey.Neuter(), new DerivationStrategyOptions()
 {
@@ -52,7 +52,7 @@ ExplorerClient client = new ExplorerClient(network);
 client.Track(userDerivationScheme);
 ```
 
-Change `ChainType.Main` if you want to use Testnet or Regtest.
+Change `NetworkType.Mainnet` if you want to use Testnet or Regtest.
 
 If you want a new unused address:
 
@@ -71,7 +71,7 @@ If you want to spend those UTXOs:
 ```cs
 var coins = utxos.GetUnspentCoins();
 var keys = utxos.GetKeys(userExtKey);
-TransactionBuilder builder = new TransactionBuilder();
+TransactionBuilder builder = Network.Main.CreateTransaction();
 builder.AddCoins(coins);
 builder.AddKeys(keys);
 builder.Send(new Key(), Money.Coins(0.5m));
@@ -98,7 +98,7 @@ while(true)
 {    
     var coins = utxos.GetUnspentCoins();
     var keys = utxos.GetKeys(userExtKey);
-    TransactionBuilder builder = new TransactionBuilder();
+    TransactionBuilder builder = Network.Main.CreateTransactionBuilder();
     builder.AddCoins(coins);
     builder.AddKeys(keys);
     builder.Send(new Key(), Money.Coins(0.5m));

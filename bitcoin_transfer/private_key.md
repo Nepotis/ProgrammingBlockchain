@@ -27,19 +27,11 @@ Console.WriteLine(samePrivateKey == privateKey); // True
 
 ```cs
 PubKey publicKey = privateKey.PubKey;
-BitcoinPubKeyAddress bitcoinPublicKey = publicKey.GetAddress(Network.Main); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
-//PubKey samePublicKey = bitcoinPublicKey.ItIsNotPossible;
+BitcoinAddress bitcoinAddress = publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
+//PubKey samePublicKey = bitcoinAddress.ItIsNotPossible;
 ```  
 
 ### Exercise:
 1. Generate a private key on the mainnet and note it.
 2. Get the corresponding address.
-3. Send bitcoins to it. As much as you cannot afford to lose, so it will keep you focused and motivated to get them back during the following lessons. 
-
-
- 
-
-
-
-
-
+3. Send bitcoins to it. More than what you can afford to lose, so it will keep you focused and motivated to get them back during the following lessons.

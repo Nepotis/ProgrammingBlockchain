@@ -76,14 +76,14 @@ masterKey = new ExtKey();
 masterPubKey = masterKey.Neuter();
 
 //The payment server generate pubkey1
-ExtPubKey pubkey1 = masterPubKey.Derive((uint)1);
+ExtPubKey pubkey1 = masterPubKey.Derive(1);
 
 //You get the private key of pubkey1
-ExtKey key1 = masterKey.Derive((uint)1);
+ExtKey key1 = masterKey.Derive(1);
 
 //Check it is legit
-Console.WriteLine("Generated address : " + pubkey1.PubKey.GetAddress(Network.Main));
-Console.WriteLine("Expected address : " + key1.PrivateKey.PubKey.GetAddress(Network.Main));
+Console.WriteLine("Generated address : " + pubkey1.PubKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main));
+Console.WriteLine("Expected address : " + key1.PrivateKey.PubKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main));
 ```
 
 ```

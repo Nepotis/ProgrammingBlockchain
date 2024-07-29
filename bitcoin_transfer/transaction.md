@@ -26,12 +26,17 @@ If you go to http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57
 You can parse the transaction from hex with the following code:  
 
 ```cs
-Transaction tx = new Transaction("0100000...");
+Transaction tx = Transaction.Parse("0100000...", Network.Main);
 ```
 
 Quickly close the tab, before it scares you away, QBit Ninja queries the API and parses the information so go ahead and install **QBitNinja.Client** NuGet package.  
 
 ![](../assets/QBitNuGet.png)  
+and using it.
+```cs
+using QBitNinja.Client;
+using QBitNinja.Client.Models;
+```
 
 Query the transaction by id:
 
@@ -121,7 +126,7 @@ As illustration let's create a txout with 21 bitcoin from the first ScriptPubKey
 ```cs  
 Money twentyOneBtc = new Money(21, MoneyUnit.BTC);
 var scriptPubKey = transaction.Outputs[0].ScriptPubKey;
-TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
+TxOut txOut = transaction.Outputs.CreateNewTxOut(twentyOneBtc, scriptPubKey);
 ```  
 
 Every **TxOut** is uniquely addressed at the blockchain level by the ID of the transaction which include it and its index inside it. We call such reference an **Outpoint**.  
@@ -173,7 +178,7 @@ Console.WriteLine(spentAmount.ToDecimal(MoneyUnit.BTC)); // 13.19703492
 
 In this transaction 13.19**70**3492 BTC were received.  
 
-**Exercise:** Get the total received amount, as I have been done with the spent amount.  
+**Exercise:** Get the total received amount, as I have done with the spent amount.
 
 That means 0.0002 BTC (or 13.19**70**3492 - 13.19**68**3492) is not accounted for! The difference between the inputs and outputs are called **Transaction Fees** or **Miner’s Fees**. This is the money that the miner collects for including a given transaction in a block.  
 
@@ -182,5 +187,5 @@ var fee = transaction.GetFee(spentCoins.ToArray());
 Console.WriteLine(fee);
 ```
 
-You should note that a **coinbase transaction** is the only transaction where the total output value is larger than the total input value. This effectively correspond to coin creation. So by definition there is no fee in a coinbase transaction. The coinbase transaction is the first transaction of every block.  
-The consensus rules enforce that the sum of output's value in the coinbase transaction does not exceed the sum of transaction fees in the block plus the mining reward.  
+You should note that a **coinbase transaction** is the only transaction where the total output value is larger than the total input value. This effectively corresponds to coin creation. So by definition there is no fee in a coinbase transaction. The coinbase transaction is the first transaction of every block.
+The consensus rules enforce that the sum of output's value in the coinbase transaction does not exceed the mining reward (the subsidy plus the sum of transaction fees in the block).

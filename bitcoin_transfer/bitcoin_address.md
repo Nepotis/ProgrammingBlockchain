@@ -30,8 +30,8 @@ You can easily get your **bitcoin address** from your public key and the **netwo
 ![](../assets/PubKeyToAddr.png)  
 
 ```cs 
-Console.WriteLine(publicKey.GetAddress(Network.Main)); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
-Console.WriteLine(publicKey.GetAddress(Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
+Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main)); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
+Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```  
 
 **To be precise, a bitcoin address is made up of a version byte (which is different on both networks) and your public key’s hash bytes. Both of these bytes are concatenated and then encoded into a Base58Check:**  
